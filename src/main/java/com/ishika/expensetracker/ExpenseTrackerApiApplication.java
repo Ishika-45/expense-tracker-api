@@ -1,4 +1,4 @@
-package com.ishika.expense_tracker_api;
+package com.ishika.expensetracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
