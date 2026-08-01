@@ -5,6 +5,7 @@ import com.ishika.expensetracker.model.Expense;
 import com.ishika.expensetracker.service.ExpenseService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,6 +29,7 @@ import java.util.UUID;
 )
 public class ExpenseController {
 
+
     private final ExpenseService expenseService;
 
 
@@ -36,7 +38,9 @@ public class ExpenseController {
     }
 
 
+
     @Operation(
+            operationId = "createExpense",
             summary = "Create a new expense",
             description = "Creates a new expense record"
     )
@@ -51,8 +55,9 @@ public class ExpenseController {
             )
     })
     @PostMapping
-    public ResponseEntity<Expense> addExpense(
+    public ResponseEntity<Expense> createExpense(
             @Valid @RequestBody CreateExpenseRequest request) {
+
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -61,7 +66,9 @@ public class ExpenseController {
 
 
 
+
     @Operation(
+            operationId = "getAllExpenses",
             summary = "Get all expenses",
             description = "Returns all expenses stored in the system"
     )
@@ -72,6 +79,7 @@ public class ExpenseController {
     @GetMapping
     public ResponseEntity<List<Expense>> getAllExpenses() {
 
+
         return ResponseEntity.ok(
                 expenseService.getAllExpenses()
         );
@@ -79,7 +87,9 @@ public class ExpenseController {
 
 
 
+
     @Operation(
+            operationId = "getExpensesByCategory",
             summary = "Get expenses by category",
             description = "Returns expenses filtered by category"
     )
@@ -89,7 +99,13 @@ public class ExpenseController {
     )
     @GetMapping(params = "category")
     public ResponseEntity<List<Expense>> getExpensesByCategory(
+
+            @Parameter(
+                    description = "Expense category",
+                    example = "Food"
+            )
             @RequestParam String category) {
+
 
         return ResponseEntity.ok(
                 expenseService.getExpensesByCategory(category)
@@ -98,7 +114,9 @@ public class ExpenseController {
 
 
 
+
     @Operation(
+            operationId = "getTotalExpenses",
             summary = "Get total expenses",
             description = "Calculates total spending amount"
     )
@@ -109,6 +127,7 @@ public class ExpenseController {
     @GetMapping("/total")
     public ResponseEntity<BigDecimal> getTotalExpenses() {
 
+
         return ResponseEntity.ok(
                 expenseService.getTotalExpenses()
         );
@@ -116,7 +135,10 @@ public class ExpenseController {
 
 
 
+
+
     @Operation(
+            operationId = "getTotalExpensesByCategory",
             summary = "Get total expenses by category",
             description = "Calculates total spending for a specific category"
     )
@@ -126,7 +148,13 @@ public class ExpenseController {
     )
     @GetMapping(value = "/total", params = "category")
     public ResponseEntity<BigDecimal> getTotalExpensesByCategory(
+
+            @Parameter(
+                    description = "Expense category",
+                    example = "Food"
+            )
             @RequestParam String category) {
+
 
         return ResponseEntity.ok(
                 expenseService.getTotalExpensesByCategory(category)
@@ -135,7 +163,10 @@ public class ExpenseController {
 
 
 
+
+
     @Operation(
+            operationId = "deleteExpense",
             summary = "Delete an expense",
             description = "Deletes an expense using its UUID"
     )
@@ -151,6 +182,11 @@ public class ExpenseController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExpense(
+
+            @Parameter(
+                    description = "Expense UUID",
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
             @PathVariable UUID id) {
 
 
@@ -158,11 +194,15 @@ public class ExpenseController {
 
 
         if (deleted) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity
+                    .noContent()
+                    .build();
         }
 
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity
+                .notFound()
+                .build();
     }
 
 }

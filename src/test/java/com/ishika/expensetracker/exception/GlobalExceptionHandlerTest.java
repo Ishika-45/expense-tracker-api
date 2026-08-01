@@ -1,22 +1,32 @@
 package com.ishika.expensetracker.exception;
 
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.junit.jupiter.api.Test;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+
+
 
 class GlobalExceptionHandlerTest {
 
 
+
     @Test
     void shouldHandleValidationException() {
+
 
 
         FieldError fieldError =
@@ -27,13 +37,17 @@ class GlobalExceptionHandlerTest {
                 );
 
 
+
         BindingResult bindingResult =
                 new org.springframework.validation.BeanPropertyBindingResult(
                         new Object(),
                         "expenseRequest"
                 );
 
+
+
         bindingResult.addError(fieldError);
+
 
 
         MethodArgumentNotValidException exception =
@@ -43,12 +57,29 @@ class GlobalExceptionHandlerTest {
                 );
 
 
+
+        HttpServletRequest request =
+                mock(HttpServletRequest.class);
+
+
+
+        when(request.getRequestURI())
+                .thenReturn("/expenses");
+
+
+
         GlobalExceptionHandler handler =
                 new GlobalExceptionHandler();
 
 
-        ResponseEntity<Map<String, String>> response =
-                handler.handleValidationExceptions(exception);
+
+
+        ResponseEntity<ErrorResponse> response =
+                handler.handleValidationExceptions(
+                        exception,
+                        request
+                );
+
 
 
         assertEquals(
@@ -57,12 +88,39 @@ class GlobalExceptionHandlerTest {
         );
 
 
+
         assertNotNull(response.getBody());
+
+
+
+        assertEquals(
+                400,
+                response.getBody().getStatus()
+        );
+
+
+
+        assertEquals(
+                "Validation failed",
+                response.getBody().getMessage()
+        );
+
+
+
+        assertEquals(
+                "/expenses",
+                response.getBody().getPath()
+        );
+
 
 
         assertEquals(
                 "Title is required",
-                response.getBody().get("title")
+                response.getBody()
+                        .getErrors()
+                        .get("title")
         );
+
     }
+
 }
