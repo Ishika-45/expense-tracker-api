@@ -1,4 +1,4 @@
-package com.ishika.expense_tracker_api;
+package com.ishika.expensetracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
