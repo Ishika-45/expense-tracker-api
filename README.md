@@ -16,17 +16,17 @@ Developed as part of the **Software Engineering Apprenticeship Program 2026 take
 
 # About The Project
 
-Smart Expense Tracker API demonstrates backend development practices using Spring Boot:
+Smart Expense Tracker API demonstrates practical backend engineering practices using Spring Boot, focusing on:
 
-- RESTful API design
-- Layered architecture
+- REST API development
+- Clean layered architecture
 - DTO-based request handling
 - Input validation
 - Global exception handling
-- Automated API testing
+- Automated testing
 - OpenAPI documentation
 
-The application currently uses **in-memory storage** as allowed by the assignment requirements.
+The application uses **in-memory storage** as allowed by the assignment requirements.
 
 ---
 
@@ -57,6 +57,21 @@ The application currently uses **in-memory storage** as allowed by the assignmen
 | JUnit 5 | Testing Framework |
 | Mockito | Mocking Framework |
 | Swagger/OpenAPI 3 | API Documentation |
+
+---
+
+# Prerequisites
+
+Before running the application, make sure you have:
+
+- Java 17 or higher
+- Maven (or Maven Wrapper included in the project)
+
+Verify Java installation:
+
+```bash
+java -version
+```
 
 ---
 
@@ -96,7 +111,7 @@ expense-tracker-api
 ## Clone Repository
 
 ```bash
-git clone Ishika-45/expense-tracker-api
+git clone https://github.com/Ishika-45/expense-tracker-api.git
 ```
 
 Navigate into the project:
@@ -147,23 +162,11 @@ Test coverage includes:
 
 - Creating expenses
 - Fetching all expenses
-- Filtering expenses
+- Filtering expenses by category
 - Calculating total expenses
 - Category-wise calculations
 - Deleting expenses
-- Validation handling
-
----
-
-# Test Verification
-
-Latest local verification:
-
-```text
-.\mvnw.cmd clean test
-
-BUILD SUCCESS
-```
+- Validation error handling
 
 ---
 
@@ -180,6 +183,8 @@ OpenAPI specification:
 ```
 http://localhost:8080/v3/api-docs
 ```
+
+Swagger documentation was added as the optional bonus feature from the assignment.
 
 ---
 
@@ -243,7 +248,7 @@ Returns all stored expenses.
 
 ---
 
-## Filter By Category
+## Filter Expenses By Category
 
 ### GET
 
@@ -275,7 +280,7 @@ Example response:
 
 ---
 
-## Get Category Total
+## Get Total Expenses By Category
 
 ### GET
 
@@ -297,6 +302,12 @@ Example response:
 
 ```
 /expenses/{id}
+```
+
+Example:
+
+```
+/expenses/550e8400-e29b-41d4-a716-446655440000
 ```
 
 Successful response:
@@ -325,6 +336,13 @@ Example:
 }
 ```
 
+Validation errors occur when:
+
+- Expense title is empty
+- Category is missing
+- Amount is invalid
+- Date is missing
+
 ---
 
 # Design Decisions
@@ -333,27 +351,45 @@ Example:
 
 The application follows a layered structure:
 
-- **Controller Layer**
-  - Handles HTTP requests and responses
+### Controller Layer
 
-- **Service Layer**
-  - Contains business logic
+Handles HTTP requests and responses.
 
-- **Model Layer**
-  - Represents expense entities
+### Service Layer
 
-- **DTO Layer**
-  - Separates API requests from internal models
+Contains business logic and expense operations.
+
+### Model Layer
+
+Represents expense data.
+
+### DTO Layer
+
+Separates API request objects from internal models.
 
 ---
 
 ## Additional Decisions
 
-- Used in-memory storage because database setup was not required.
+- Used in-memory storage because database setup was not required by the assignment.
 - Added DTO validation to prevent invalid expense data.
 - Added global exception handling for consistent error responses.
 - Added Swagger documentation for easier API exploration.
 - Added automated tests to verify functionality.
+
+---
+
+# Project Status
+
+Completed assignment implementation.
+
+Implemented:
+
+- Core expense management APIs
+- Request validation
+- Exception handling
+- Swagger/OpenAPI documentation
+- Automated tests
 
 ---
 
