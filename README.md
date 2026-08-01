@@ -4,12 +4,29 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
 ![Maven](https://img.shields.io/badge/Maven-Build-blue)
 ![Swagger](https://img.shields.io/badge/API-Swagger%20OpenAPI-green)
+![Testing](https://img.shields.io/badge/Tests-JUnit%205%20%7C%20Mockito-purple)
 
 A RESTful API built using **Java Spring Boot** for managing personal expenses.
 
-This application allows users to create expenses, retrieve expenses, filter expenses by category, calculate total spending, and delete expenses.
+The application provides APIs to create, retrieve, filter, calculate, and delete expenses while following a clean layered architecture with validation, exception handling, API documentation, and automated testing.
 
 Developed as part of the **Software Engineering Apprenticeship Program 2026 take-home assignment**.
+
+---
+
+# About The Project
+
+Smart Expense Tracker API demonstrates backend development practices using Spring Boot:
+
+- RESTful API design
+- Layered architecture
+- DTO-based request handling
+- Input validation
+- Global exception handling
+- Automated API testing
+- OpenAPI documentation
+
+The application currently uses **in-memory storage** as allowed by the assignment requirements.
 
 ---
 
@@ -30,16 +47,16 @@ Developed as part of the **Software Engineering Apprenticeship Program 2026 take
 
 # Tech Stack
 
-| Technology | Usage |
+| Technology | Purpose |
 |---|---|
 | Java 17 | Programming Language |
 | Spring Boot 3 | Backend Framework |
 | Spring Web | REST API Development |
 | Jakarta Validation | Request Validation |
-| Maven | Dependency Management |
-| JUnit 5 | Testing |
-| Mockito | Mocking |
-| Swagger OpenAPI 3 | API Documentation |
+| Maven | Build & Dependency Management |
+| JUnit 5 | Testing Framework |
+| Mockito | Mocking Framework |
+| Swagger/OpenAPI 3 | API Documentation |
 
 ---
 
@@ -79,7 +96,7 @@ expense-tracker-api
 ## Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone Ishika-45/expense-tracker-api
 ```
 
 Navigate into the project:
@@ -90,7 +107,7 @@ cd expense-tracker-api
 
 ---
 
-# Running the Application
+# Running The Application
 
 ## Windows
 
@@ -104,7 +121,7 @@ cd expense-tracker-api
 ./mvnw spring-boot:run
 ```
 
-Application runs on:
+Application starts at:
 
 ```
 http://localhost:8080
@@ -126,15 +143,27 @@ http://localhost:8080
 ./mvnw clean test
 ```
 
-Tests cover:
+Test coverage includes:
 
 - Creating expenses
 - Fetching all expenses
-- Filtering expenses by category
+- Filtering expenses
 - Calculating total expenses
-- Calculating category-wise totals
+- Category-wise calculations
 - Deleting expenses
-- Validation error handling
+- Validation handling
+
+---
+
+# Test Verification
+
+Latest local verification:
+
+```text
+.\mvnw.cmd clean test
+
+BUILD SUCCESS
+```
 
 ---
 
@@ -146,7 +175,7 @@ Swagger UI:
 http://localhost:8080/swagger-ui/index.html
 ```
 
-OpenAPI JSON:
+OpenAPI specification:
 
 ```
 http://localhost:8080/v3/api-docs
@@ -154,7 +183,20 @@ http://localhost:8080/v3/api-docs
 
 ---
 
-# API Endpoints
+# API Overview
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/expenses` | Create a new expense |
+| GET | `/expenses` | Retrieve all expenses |
+| GET | `/expenses?category={category}` | Filter expenses by category |
+| GET | `/expenses/total` | Calculate total expenses |
+| GET | `/expenses/total?category={category}` | Calculate category total |
+| DELETE | `/expenses/{id}` | Delete an expense |
+
+---
+
+# API Examples
 
 ## Create Expense
 
@@ -164,7 +206,7 @@ http://localhost:8080/v3/api-docs
 /expenses
 ```
 
-### Request
+Request:
 
 ```json
 {
@@ -175,7 +217,7 @@ http://localhost:8080/v3/api-docs
 }
 ```
 
-### Response
+Response:
 
 ```json
 {
@@ -201,7 +243,7 @@ Returns all stored expenses.
 
 ---
 
-## Filter Expenses By Category
+## Filter By Category
 
 ### GET
 
@@ -233,7 +275,7 @@ Example response:
 
 ---
 
-## Get Total Expenses By Category
+## Get Category Total
 
 ### GET
 
@@ -257,13 +299,7 @@ Example response:
 /expenses/{id}
 ```
 
-Example:
-
-```
-/expenses/550e8400-e29b-41d4-a716-446655440000
-```
-
-Response:
+Successful response:
 
 ```
 204 No Content
@@ -273,7 +309,7 @@ Response:
 
 # Error Handling
 
-The API returns structured error responses for invalid requests.
+The API provides structured error responses for invalid requests.
 
 Example:
 
@@ -291,28 +327,33 @@ Example:
 
 ---
 
-# Data Storage
+# Design Decisions
 
-The application uses **in-memory storage** as allowed by the assignment requirements.
+## Layered Architecture
 
-No external database configuration is required.
+The application follows a layered structure:
+
+- **Controller Layer**
+  - Handles HTTP requests and responses
+
+- **Service Layer**
+  - Contains business logic
+
+- **Model Layer**
+  - Represents expense entities
+
+- **DTO Layer**
+  - Separates API requests from internal models
 
 ---
 
-# Design Decisions
+## Additional Decisions
 
-- Used layered architecture:
-  - Controller layer handles HTTP requests
-  - Service layer contains business logic
-  - Model layer represents expense data
-
-- Added DTO (`CreateExpenseRequest`) to separate API input from internal models.
-
-- Added global exception handling to provide consistent error responses.
-
-- Added Swagger documentation for easier API testing.
-
-- Added automated tests to verify API behaviour.
+- Used in-memory storage because database setup was not required.
+- Added DTO validation to prevent invalid expense data.
+- Added global exception handling for consistent error responses.
+- Added Swagger documentation for easier API exploration.
+- Added automated tests to verify functionality.
 
 ---
 
